@@ -23,18 +23,20 @@ type PlantInput = {
   tempMinC?: number | string | ""
   tempMaxC?: number | string | ""
   room?: string
+  roomId?: string | ""
   weatherNotes?: string
 }
 
 type Props = {
   mode: "create" | "edit"
   initial?: PlantInput
+  rooms?: { id: string; name: string }[]
 }
 
 const LIGHTS = ["", "low", "medium", "bright"] as const
 const WATERS = ["", "low", "medium", "high"] as const
 
-export function PlantForm({ mode, initial }: Props) {
+export function PlantForm({ mode, initial, rooms }: Props) {
   const router = useRouter()
   const init = initial as Record<string, unknown> | undefined
   const asStr = (v: unknown) => (v == null ? "" : String(v))
@@ -56,6 +58,7 @@ export function PlantForm({ mode, initial }: Props) {
     tempMinC: asStr(init?.["tempMinC"]),
     tempMaxC: asStr(init?.["tempMaxC"]),
     room: (init?.["room"] as string) ?? "",
+    roomId: (init?.["roomId"] as string) ?? "",
     weatherNotes: (init?.["weatherNotes"] as string) ?? "",
   }))
   const [submitting, setSubmitting] = useState(false)
@@ -102,6 +105,7 @@ export function PlantForm({ mode, initial }: Props) {
         tempMinC: form.tempMinC === "" ? undefined : Number(form.tempMinC),
         tempMaxC: form.tempMaxC === "" ? undefined : Number(form.tempMaxC),
         room: form.room?.trim() || undefined,
+        roomId: form.roomId || undefined,
         weatherNotes: form.weatherNotes?.trim() || undefined,
       }
       // Client-side validation mirrors server
@@ -303,12 +307,25 @@ export function PlantForm({ mode, initial }: Props) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1 block text-sm text-gray-600 dark:text-gray-300">Room</label>
-          <input
-            value={form.room || ""}
-            onChange={(e) => setForm((f) => ({ ...f, room: e.target.value }))}
-            placeholder="e.g. Living Room"
-            className="w-full rounded border p-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400"
-          />
+          {rooms && rooms.length ? (
+            <select
+              value={form.roomId || ""}
+              onChange={(e) => setForm((f) => ({ ...f, roomId: e.target.value }))}
+              className="w-full rounded border p-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+            >
+              <option value="">(none)</option>
+              {rooms.map((r) => (
+                <option key={r.id} value={r.id}>{r.name}</option>
+              ))}
+            </select>
+          ) : (
+            <input
+              value={form.room || ""}
+              onChange={(e) => setForm((f) => ({ ...f, room: e.target.value }))}
+              placeholder="e.g. Living Room"
+              className="w-full rounded border p-2 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400"
+            />
+          )}
         </div>
         <div>
           <label className="mb-1 block text-sm text-gray-600 dark:text-gray-300">Weather context</label>

@@ -9,7 +9,9 @@ import { FabActions } from "components/FabActions"
 import { MoreMenu } from "components/MoreMenu"
 import { PlantTimes } from "components/PlantTimes"
 import { prisma } from "lib/prisma"
-import { computeRecommendedWaterMl } from "lib/water"
+import { computeAdjustedWaterMl, computeRecommendedWaterMl } from "lib/water"
+import { getCurrentWeather } from "lib/weather"
+import { WeatherWidget } from "components/WeatherWidget"
 
 export const dynamic = "force-dynamic"
 
@@ -42,16 +44,41 @@ export default async function PlantDetailPage({ params }: { params: Promise<{ id
   })
   if (!plant) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
+      <main className="mx-auto max-w-5xl px-4 py-10">
         <p className="text-gray-700 dark:text-gray-200">Plant not found.</p>
       </main>
     )
+  }
+  // Resolve room details if linked
+  let roomName: string | null = plant.room ?? null
+  let roomLat: number | null = null
+  let roomLon: number | null = null
+  if ((plant as any).roomId) {
+    const room = await prisma.room.findUnique({ where: { id: (plant as any).roomId as string } })
+    if (room) {
+      roomName = room.name
+      roomLat = room.lat ?? null
+      roomLon = room.lon ?? null
+    }
   }
   const recommendedWaterMl = computeRecommendedWaterMl(
     plant.potSizeCm ?? null,
     plant.soilType ?? null,
     (plant.humidityPref as "low" | "medium" | "high" | null)
   )
+
+  // Weather via room coordinates if present, else user settings
+  let weather: Awaited<ReturnType<typeof getCurrentWeather>> | null = null
+  try {
+    const settings = await prisma.userSettings.findUnique({ where: { ownerId: userId } })
+    if (roomLat != null && roomLon != null) {
+      const unit = (settings?.unit === "imperial" ? "imperial" : "metric") as "metric" | "imperial"
+      weather = await getCurrentWeather(roomLat, roomLon, unit)
+    } else if (settings?.lat != null && settings?.lon != null) {
+      const unit = (settings.unit === "imperial" ? "imperial" : "metric") as "metric" | "imperial"
+      weather = await getCurrentWeather(settings.lat, settings.lon, unit)
+    }
+  } catch {}
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
@@ -191,6 +218,7 @@ export default async function PlantDetailPage({ params }: { params: Promise<{ id
           fertilizeIntervalDays={plant.fertilizeIntervalDays ?? null}
           waterMl={plant.waterMl ?? null}
           recommendedWaterMl={recommendedWaterMl}
+          adjustedWaterMl={weather ? computeAdjustedWaterMl(recommendedWaterMl ?? 0, { tempC: weather.tempC, humidity: weather.humidity }, (plant.humidityPref as any) ?? null) : null}
         />
 
         {/* Care History (collapsible tabs) */}
@@ -245,23 +273,28 @@ export default async function PlantDetailPage({ params }: { params: Promise<{ id
         </section>
 
         {/* Environment */}
-        {plant.room || plant.weatherNotes ? (
+        {roomName || plant.weatherNotes || weather ? (
           <section className="mt-6">
             <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100">Environment</h2>
-            <dl className="grid grid-cols-2 gap-4 text-sm">
-              {plant.room ? (
-                <div>
-                  <dt className="text-gray-500 dark:text-gray-400">Location</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">{plant.room}</dd>
-                </div>
+            <div className="grid gap-4 text-sm sm:grid-cols-2">
+              {weather ? (
+                <WeatherWidget tempC={weather.tempC} feelsLikeC={weather.feelsLikeC} humidity={weather.humidity} description={weather.description} dt={weather.dt} />
               ) : null}
+              <dl className="grid grid-cols-2 gap-4 text-sm">
+                {roomName ? (
+                  <div>
+                    <dt className="text-gray-500 dark:text-gray-400">Location</dt>
+                    <dd className="text-gray-800 dark:text-gray-200">{roomName}</dd>
+                  </div>
+                ) : null}
               {plant.weatherNotes ? (
-                <div className="col-span-2">
-                  <dt className="text-gray-500 dark:text-gray-400">Weather context</dt>
-                  <dd className="text-gray-800 dark:text-gray-200">{plant.weatherNotes}</dd>
-                </div>
-              ) : null}
-            </dl>
+                  <div className="col-span-2">
+                    <dt className="text-gray-500 dark:text-gray-400">Weather context</dt>
+                    <dd className="text-gray-800 dark:text-gray-200">{plant.weatherNotes}</dd>
+                  </div>
+                ) : null}
+              </dl>
+            </div>
           </section>
         ) : null}
       </article>

@@ -23,6 +23,7 @@ export const PlantCreateSchema = z.object({
   tempMinC: z.coerce.number().int().min(-50).max(80).optional(),
   tempMaxC: z.coerce.number().int().min(-50).max(80).optional(),
   room: z.string().max(100).optional(),
+  roomId: z.string().max(200).optional(),
   weatherNotes: z.string().max(500).optional(),
   archived: z.boolean().optional(),
 })

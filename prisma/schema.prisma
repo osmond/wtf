@@ -28,6 +28,8 @@ model Plant {
   tempMinC      Int?
   tempMaxC      Int?
   room          String?
+  roomId        String?
+  Room          Room?    @relation(fields: [roomId], references: [id])
   weatherNotes  String?
   archived      Boolean  @default(false)
   createdAt     DateTime @default(now())
@@ -35,6 +37,26 @@ model Plant {
 
   CareEvent     CareEvent[]
   Task          Task[]
+}
+
+model UserSettings {
+  ownerId   String   @id
+  lat       Float?
+  lon       Float?
+  unit      String?  @default("metric") // metric | imperial
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id        String   @id @default(cuid())
+  ownerId   String
+  name      String
+  lat       Float?
+  lon       Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Plants    Plant[]
 }
 
 // Optional index to speed up per-user queries

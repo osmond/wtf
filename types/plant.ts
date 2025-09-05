@@ -12,4 +12,5 @@ export type Plant = {
   fertilizeIntervalDays?: number
   waterMl?: number
   health?: "healthy" | "sick" | "dormant" | "dead"
+  roomId?: string
 }

@@ -18,6 +18,7 @@ export function PlantTimes({
   fertilizeIntervalDays,
   waterMl,
   recommendedWaterMl,
+  adjustedWaterMl,
 }: {
   id: string
   lastWateredAt?: string | null
@@ -26,6 +27,7 @@ export function PlantTimes({
   fertilizeIntervalDays?: number | null
   waterMl?: number | null
   recommendedWaterMl?: number | null
+  adjustedWaterMl?: number | null
 }) {
   const [optimisticWateredAt, setOW] = useState<string | null>(null)
   const [optimisticFertilizedAt, setOF] = useState<string | null>(null)
@@ -63,14 +65,14 @@ export function PlantTimes({
           >
             {pendingW ? "Watering..." : "Mark Watered"}
           </button>
-          {recommendedWaterMl && !waterMl ? (
+          {(adjustedWaterMl || recommendedWaterMl) && !waterMl ? (
             <button
               className="mt-2 rounded border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               onClick={async () => {
                 const res = await fetch(`/api/plants/${id}`, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ waterMl: recommendedWaterMl }),
+                  body: JSON.stringify({ waterMl: adjustedWaterMl ?? recommendedWaterMl }),
                 })
                 if (res.ok) {
                   notify("success", "Water amount set")
@@ -87,6 +89,8 @@ export function PlantTimes({
           <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
             {waterMl
               ? `Recommended: ${Math.round((waterMl / 29.5735) * 10) / 10} oz (${waterMl} mL)`
+              : adjustedWaterMl
+              ? `Adjusted: ${Math.round((adjustedWaterMl / 29.5735) * 10) / 10} oz (${adjustedWaterMl} mL)`
               : recommendedWaterMl
               ? `Suggested: ${Math.round((recommendedWaterMl / 29.5735) * 10) / 10} oz (${recommendedWaterMl} mL)`
               : null}
