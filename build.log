@@ -1,0 +1,191 @@
+
+> next-enterprise@0.0.0 build /Users/jonathanosmond/FUN/wtf/wtf
+> next build
+
+   ▲ Next.js 15.3.3
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1000ms
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./app/api/plants/[id]/fertilize/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/api/plants/[id]/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+3:1  Warning: `lib/plant-schema` import should occur after import of `auth.config`  import/order
+
+./app/api/plants/[id]/water/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/api/plants/fix-images/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/api/plants/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+3:1  Warning: `lib/plant-schema` import should occur after import of `auth.config`  import/order
+
+./app/api/plants/seed/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+3:1  Warning: `data/plants` import should occur after import of `auth.config`  import/order
+
+./app/api/tasks/[id]/complete/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/api/tasks/counts/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/api/tasks/generate/route.ts
+2:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+
+./app/layout.tsx
+2:1  Warning: `components/RootProviders` import should occur after import of `components/MobileBottomNav`  import/order
+
+./app/plants/[id]/edit/page.tsx
+3:1  Warning: `lib/prisma` import should occur after import of `auth.config`  import/order
+4:1  Warning: `components/PlantForm` import should occur after import of `auth.config`  import/order
+
+./app/plants/[id]/page.tsx
+3:1  Warning: `components/PlantTimes` import should occur before import of `lib/prisma`  import/order
+4:1  Warning: `next-auth` import should occur before import of `lib/prisma`  import/order
+5:1  Warning: `auth.config` import should occur before import of `lib/prisma`  import/order
+6:1  Warning: `components/FabActions` import should occur before import of `lib/prisma`  import/order
+8:1  Warning: `components/CareHistoryClient` import should occur before import of `lib/prisma`  import/order
+9:1  Warning: `lucide-react` import should occur before type import of `next`  import/order
+10:1  Warning: `components/MoreMenu` import should occur before import of `lib/prisma`  import/order
+61:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/plants/analytics/page.tsx
+2:1  Warning: `next-auth` import should occur before import of `lib/prisma`  import/order
+3:1  Warning: `auth.config` import should occur before import of `lib/prisma`  import/order
+4:1  Warning: `next/dynamic` import should occur before import of `lib/prisma`  import/order
+53:9  Warning: 'buckets' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+174:11  Warning: 'scheduled' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+175:16  Warning: 'e' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/plants/digest/page.tsx
+3:1  Warning: `next-auth` import should occur before import of `lib/prisma`  import/order
+4:1  Warning: `auth.config` import should occur before import of `lib/prisma`  import/order
+5:1  Warning: `lucide-react` import should occur before import of `next/link`  import/order
+
+./app/plants/new/page.tsx
+1:1  Warning: `next/link` import should occur after type import of `next`  import/order
+1:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:1  Warning: `components/PlantForm` import should occur after import of `auth.config`  import/order
+
+./app/plants/page.tsx
+1:1  Warning: `next/link` import should occur after type import of `@prisma/client`  import/order
+1:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:1  Warning: `next` type import should occur after type import of `@prisma/client`  import/order
+4:1  Warning: `lib/prisma` import should occur after import of `components/FiltersBarClient`  import/order
+8:1  Warning: `components/PlantCard/PlantCard` import should occur after import of `components/FiltersBarClient`  import/order
+9:1  Warning: `components/SeedButton` import should occur after import of `components/FiltersBarClient`  import/order
+91:9  Warning: 'todayFocusCount' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+92:7  Error: 'plants' is never reassigned. Use 'const' instead.  prefer-const
+
+./app/plants/today/page.tsx
+2:1  Warning: `lib/prisma` import should occur after import of `components/GenerateTasksButton`  import/order
+17:10  Warning: 'nextDue' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+84:18  Error: A `require()` style import is forbidden.  @typescript-eslint/no-require-imports
+84:77  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/AnalyticsClient.tsx
+51:9  Warning: 'nextLineData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+135:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+135:64  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:37  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:68  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:67  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+147:33  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+147:64  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:35  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:66  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+155:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+159:39  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+167:18  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+171:16  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+176:37  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+176:68  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+180:43  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+180:228  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:41  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:72  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/AuthButtons.tsx
+3:1  Warning: `next-auth/react` import should occur before import of `react`  import/order
+
+./components/Charts.tsx
+4:3  Error: Member 'CategoryScale' of the import declaration should be sorted alphabetically.  sort-imports
+
+./components/DeleteButton.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+
+./components/FabActions.tsx
+6:1  Warning: `lucide-react` import should occur before import of `next/link`  import/order
+
+./components/FiltersBarClient.tsx
+4:1  Warning: `lucide-react` import should occur before import of `next/navigation`  import/order
+39:11  Warning: 'params' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/FixImagesButton.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+
+./components/GenerateTasksButton.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+
+./components/HeaderNav.tsx
+5:1  Warning: `react` import should occur before import of `components/AuthButtons`  import/order
+
+./components/MobileBottomNav.tsx
+5:1  Warning: `lucide-react` import should occur before import of `next/link`  import/order
+
+./components/MoreMenu.tsx
+3:1  Warning: `next/link` import should occur before import of `react`  import/order
+4:1  Warning: `lucide-react` import should occur before import of `react`  import/order
+
+./components/PlantCard/PlantCard.tsx
+1:1  Warning: `next/link` import should occur after import of `lucide-react`  import/order
+2:1  Warning: `types/plant` type import should occur after import of `components/SafeImg`  import/order
+
+./components/PlantForm.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+6:1  Warning: `components/ToastProvider` import should occur before import of `lib/plant-schema`  import/order
+
+./components/PlantTimes.tsx
+2:41  Warning: '/Users/jonathanosmond/FUN/wtf/wtf/node_modules/.pnpm/@types+react@19.1.3/node_modules/@types/react/index.d.ts' imported multiple times.  import/no-duplicates
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+5:1  Warning: `lucide-react` import should occur before import of `react`  import/order
+5:10  Warning: 'Droplets' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:20  Warning: 'Sprout' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:1  Warning: `react` import should occur before import of `components/ToastProvider`  import/order
+6:10  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:27  Warning: '/Users/jonathanosmond/FUN/wtf/wtf/node_modules/.pnpm/@types+react@19.1.3/node_modules/@types/react/index.d.ts' imported multiple times.  import/no-duplicates
+39:12  Warning: 'fmtNext' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+71:9  Warning: 'earliestKind' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+72:9  Warning: 'overdue' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+74:9  Warning: 'dueSoon' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+76:12  Warning: 'iconColor' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/SeedButton.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+
+./components/TodayListClient.tsx
+3:1  Warning: `next/link` import should occur before import of `react`  import/order
+4:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+6:1  Warning: `lucide-react` import should occur before import of `react`  import/order
+
+./components/TodayTasksClient.tsx
+3:1  Warning: `next/link` import should occur before import of `react`  import/order
+4:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+6:1  Warning: `lucide-react` import should occur before import of `react`  import/order
+13:16  Warning: 'setDone' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/WaterButton.tsx
+3:1  Warning: `next/navigation` import should occur before import of `react`  import/order
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+ ELIFECYCLE  Command failed with exit code 1.

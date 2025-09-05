@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Plant {
+  id            String   @id
+  name          String
+  species       String?
+  light         String?
+  water         String?
+  description   String?
+  imageUrl      String?
+  lastWateredAt DateTime?
+  lastFertilizedAt DateTime?
+  waterIntervalDays Int?
+  fertilizeIntervalDays Int?
+  ownerId       String?
+  health        String?
+  waterMl       Int?
+  potSizeCm     Int?
+  soilType      String?
+  humidityPref  String? // low | medium | high
+  tempMinC      Int?
+  tempMaxC      Int?
+  room          String?
+  weatherNotes  String?
+  archived      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  CareEvent     CareEvent[]
+  Task          Task[]
+}
+
+// Optional index to speed up per-user queries
+//@index([ownerId])
+
+model CareEvent {
+  id        String   @id @default(cuid())
+  ownerId   String
+  plantId   String
+  type      String   // water | fertilize | repot | other
+  minutes   Int?
+  waterMl   Int?
+  fertilizerType String?
+  note      String?
+  createdAt DateTime @default(now())
+
+  plant     Plant    @relation(fields: [plantId], references: [id])
+}
+
+model Task {
+  id           String   @id @default(cuid())
+  ownerId      String
+  plantId      String
+  type         String   // water | fertilize | repot | other
+  scheduledFor DateTime
+  completedAt  DateTime?
+  createdAt    DateTime @default(now())
+
+  plant        Plant    @relation(fields: [plantId], references: [id])
+
+  @@index([ownerId, scheduledFor])
+  @@unique([ownerId, plantId, type, scheduledFor])
+}

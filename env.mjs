@@ -3,6 +3,7 @@ import { z } from "zod"
 
 export const env = createEnv({
   server: {
+    DATABASE_URL: z.string().default("file:./prisma/dev.db"),
     ANALYZE: z
       .enum(["true", "false"])
       .optional()
@@ -10,6 +11,7 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
+    DATABASE_URL: process.env.DATABASE_URL,
     ANALYZE: process.env.ANALYZE,
   },
 })
