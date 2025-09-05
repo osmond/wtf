@@ -1,4 +1,41 @@
 
+# Plant Care App
+
+A user-friendly app for tracking and managing your houseplants. Add plants, auto-fill care schedules, and get reminders for watering, fertilizing, and more.
+
+## Features
+
+- Add and edit plant profiles (name, species, room, photo)
+- Auto-fill care recommendations based on species
+- Progressive form with advanced settings for power users
+- Visual care plan preview
+- Mobile-friendly design
+- Notifications for upcoming care tasks
+- Weather context auto-detection for environment settings
+
+## Getting Started
+
+1. Clone the repo and install dependencies:
+  ```bash
+  pnpm install
+  ```
+2. Run the development server:
+  ```bash
+  pnpm dev
+  ```
+3. Open [http://localhost:3000](http://localhost:3000) to use the app.
+
+## Usage
+
+- Add a new plant and select its species
+- Review and adjust the auto-filled care schedule
+- Save and get reminders for plant care
+
+## Screenshots
+
+*(Add screenshots or a GIF here)*
+
+---
 # [Next.js Enterprise Boilerplate](https://blazity.com/open-source/nextjs-enterprise-boilerplate) 
 
 A production-ready template for building enterprise applications with Next.js. This boilerplate provides a solid foundation with carefully selected technologies and ready-to-go infrastructure to help you develop high-quality applications efficiently.
