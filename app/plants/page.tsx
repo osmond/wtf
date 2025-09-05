@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "auth.config"
 import { AuthButtons } from "components/AuthButtons"
 import { FiltersBarClient } from "components/FiltersBarClient"
+import { UserSettingsCard } from "components/UserSettingsCard"
 import { PlantCard } from "components/PlantCard/PlantCard"
 import { SeedButton } from "components/SeedButton"
 import { prisma } from "lib/prisma"
@@ -109,6 +110,9 @@ export default async function PlantsPage({ searchParams }: { searchParams: Promi
       ) : (
         <>
           <FiltersBarClient />
+          <div className="mt-4">
+            <UserSettingsCard />
+          </div>
           <section className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {plants.map((plant) => (
               <PlantCard key={plant.id} plant={plant as unknown as import("types/plant").Plant} />

@@ -5,6 +5,14 @@ import { prisma } from "lib/prisma"
 
 export const dynamic = "force-dynamic"
 
+export async function GET() {
+  const session = await getServerSession(authOptions)
+  const userId = (session as unknown as { user?: { id?: string } })?.user?.id
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  const settings = await prisma.userSettings.findUnique({ where: { ownerId: userId } })
+  return NextResponse.json({ settings })
+}
+
 export async function PATCH(req: Request) {
   const session = await getServerSession(authOptions)
   const userId = (session as unknown as { user?: { id?: string } })?.user?.id
@@ -21,4 +29,3 @@ export async function PATCH(req: Request) {
   })
   return NextResponse.json({ ok: true, settings: up })
 }
-
